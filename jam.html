@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Program Jam Realtime</title>
+    <script>
+        function updateClock() {
+            var now = new Date();
+            var date = now.toDateString();
+            var time = now.toLocaleTimeString();
+
+            document.getElementById('date').innerHTML = 'Date: ' + date;
+            document.getElementById('time').innerHTML = 'Time: ' + time;
+
+            setTimeout(updateClock, 1000);
+        }
+    </script>
+</head>
+<body onload="updateClock()">
+    <h1>Tanggal dan Jam Saat Ini : </h1>
+    <p id="date">Tanggal: </p>
+    <p id="time">Jam: </p>
+</body>
+</html>

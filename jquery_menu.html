@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Menu jQuery</title>
+  <link rel="stylesheet" href="css/jquery-ui.min.css">
+  <style>
+  .ui-menu {
+    width: 200px;
+  }
+  </style>
+  <script src="js/jquery-3.7.1.min.js"></script>
+  <script src="js/jquery-ui.min.js"></script>
+</head>
+<body>
+ 
+<ul id="menu">
+  <li>
+    <div>Beranda</div>
+  </li>
+  <li>
+    <div>Postingan</div>
+  </li>
+  <li>
+    <div>Pengaturan</div>
+  </li>
+  <li>
+    <div>Jelajahi</div>
+  </li>
+  <li>
+    <div>Profil</div>
+    <ul>
+      <li>
+        <div>Lihat Profil</div>
+      </li>
+      <li>
+        <div>Edit Profil</div>
+      </li>
+      <li>
+        <div>Logout</div>
+      </li>
+    </ul>
+  </li>
+</ul>
+ 
+<script>
+$( "#menu" ).menu();
+</script>
+ 
+</body>
+</html>

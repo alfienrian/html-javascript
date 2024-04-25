@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>jQuery UI Progressbar - Download Dialog</title>
+    <script src="js/jquery-3.7.1.min.js"></script>
+    <script src="js/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="css/jquery-ui.min.css" />
+    <script>
+      $(function () {
+        var progressTimer,
+          progressbar = $("#progressbar"),
+          progressLabel = $(".progress-label"),
+          dialogButtons = [
+            {
+              text: "Batal",
+              click: closeDownload,
+            },
+          ],
+          dialog = $("#dialog").dialog({
+            autoOpen: false,
+            closeOnEscape: false,
+            resizable: false,
+            buttons: dialogButtons,
+            open: function () {
+              progressTimer = setTimeout(progress, 2000);
+            },
+            beforeClose: function () {
+              downloadButton.button("option", {
+                disabled: false,
+                label: "Mulai Download",
+              });
+            },
+          }),
+          downloadButton = $("#downloadButton")
+            .button()
+            .on("click", function () {
+              $(this).button("option", {
+                disabled: true,
+                label: "Sedang mendownload...",
+              });
+              dialog.dialog("open");
+            });
+
+        progressbar.progressbar({
+          value: false,
+          change: function () {
+            progressLabel.text(
+              "Progress : " + progressbar.progressbar("value") + "%"
+            );
+          },
+          complete: function () {
+            progressLabel.text("Download selesai!");
+            dialog.dialog("option", "buttons", [
+              {
+                text: "Tutup",
+                click: closeDownload,
+              },
+            ]);
+            $(".ui-dialog button").last().trigger("focus");
+          },
+        });
+
+        function progress() {
+          var val = progressbar.progressbar("value") || 0;
+
+          progressbar.progressbar("value", val + Math.floor(Math.random() * 3));
+
+          if (val <= 99) {
+            progressTimer = setTimeout(progress, 50);
+          }
+        }
+
+        function closeDownload() {
+          clearTimeout(progressTimer);
+          dialog.dialog("option", "buttons", dialogButtons).dialog("close");
+          progressbar.progressbar("value", false);
+          progressLabel.text("Memulai download...");
+          downloadButton.trigger("focus");
+        }
+      });
+    </script>
+    <style>
+      .ui-dialog-titlebar-close {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="dialog" title="Download File">
+      <div class="progress-label">Memulai download...</div>
+      <div id="progressbar"></div>
+    </div>
+    <button id="downloadButton">Mulai Download</button>
+  </body>
+</html>
